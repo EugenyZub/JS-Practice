@@ -5,7 +5,7 @@ let time = prompt('Введите дату в формате YYYY-MM-DD');
 
 let appData = {
     finance: money,
-    timeData: time,
+    timeData: new Date(time),
     expenses: {},
     optionalExpenses: {},
     income: [],
@@ -14,12 +14,11 @@ let appData = {
 
 let answer1,
     answer2;
+
 for(let i = 0; i < 3; i++) {
     answer1 = prompt('Введите обязательную статью расходов в этом месяце');
     answer2 = +prompt('Во сколько обойдется?');
     appData.expenses[i] = (answer1 + ' : ' + answer2);
 }
-
-console.log(appData.expenses);
 
 alert('Бюджет на 1 день: ' + appData.finance/30);
