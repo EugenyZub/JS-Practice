@@ -15,7 +15,7 @@ let appData = {
 let answer1,
     answer2;
 
-for(let i = 0; i < 3; i++) {
+for(let i = 0; i < 2; i++) {
     answer1 = prompt('Введите обязательную статью расходов в этом месяце');
     answer2 = +prompt('Во сколько обойдется?');
     appData.expenses[i] = (answer1 + ' : ' + answer2);
