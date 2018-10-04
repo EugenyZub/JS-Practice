@@ -1,18 +1,25 @@
 'use stric';
 
-let finance = +prompt('Ваш бюджет на месяц?');
-let shopName = prompt('Название вашего магазина?');
+let money = +prompt('Ваш бюджет на месяц?');
+let time = prompt('Введите дату в формате YYYY-MM-DD');
 
-let mainList = {
-    finance: finance,
-    shopName: shopName,
-    shopGoods: [],
-    employers: {},
-    open: true
+let appData = {
+    finance: money,
+    timeData: time,
+    expenses: {},
+    optionalExpenses: {},
+    income: [],
+    savings: false
 };
 
+let answer1,
+    answer2;
 for(let i = 0; i < 3; i++) {
-    mainList.shopGoods[i] = prompt('Какой тип товаров будем продавать?');
+    answer1 = prompt('Введите обязательную статью расходов в этом месяце');
+    answer2 = +prompt('Во сколько обойдется?');
+    appData.expenses[i] = (answer1 + ' : ' + answer2);
 }
 
-alert('Бюджет на 1 день: ' + mainList.finance/30);
+console.log(appData.expenses);
+
+alert('Бюджет на 1 день: ' + appData.finance/30);
