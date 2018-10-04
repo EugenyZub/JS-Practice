@@ -2,7 +2,7 @@
 
 const num = 33721;
 
-let    result = 1;
+let result = 1;
 
 for(let i = 0; i < num.toString().length; i++) {
     result *= (''+num)[i];
