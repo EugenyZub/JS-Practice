@@ -2,16 +2,13 @@
 
 const num = 33721;
 
-let one = (''+num)[0],
-    two = (''+num)[1], 
-    units = (''+num)[4], 
-    tens = (''+num)[3],
-    hundreds = (''+num)[2],
-    thousands = (''+num)[1],
-    tensOfThousands = (''+num)[0],
+let    result = 1;
 
-    result = tensOfThousands * thousands * hundreds * tens * units,
-    power = result ** 3;
+for(let i = 0; i < num.toString().length; i++) {
+    result *= (''+num)[i];
+}
+
+let power = result ** 3;
 
 console.log(result);
 
