@@ -2,21 +2,21 @@
 
 //Первая часть, выделение определённого дня недели
 let week = [
+    'Воскресенье',
     'Понедельник',
     'Вторник',
     'Среда',
     'Четверг',
     'Пятница',
-    'Суббота',
-    'Воскресенье'
+    'Суббота'   
 ];
 
-let curentDay = 'Среда';
+let data = new Date().getDay();
 
 for( let i = 0; i < week.length; i++) {
-    if (curentDay == week[i]) {
+    if (data == i) {
         document.write('<i>' + week[i] + '</i><br>');
-    } else if (i < 5) {
+    } else if (i > 0 && i < 5) {
         document.write(week[i] + '<br>');   
     } else {
         document.write('<b>' + week[i] + '</b><br>');
