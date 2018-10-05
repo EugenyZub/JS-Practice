@@ -26,8 +26,8 @@ for(let i = 0; i < 2; i++) {
         console.log('done');
         appData.expenses[i] = (answer1 + ' : ' + answer2);
     } else {
-
-    }   
+        i--;
+    }
 }
 
 // let i = 0;
@@ -41,7 +41,7 @@ for(let i = 0; i < 2; i++) {
 //         console.log('done');
 //         appData.expenses[i] = (answer1 + ' : ' + answer2);
 //     } else {
-
+//            i--;
 //     }   
 //     i++;
 // }
@@ -50,14 +50,14 @@ for(let i = 0; i < 2; i++) {
 // do {
 //     answer1 = prompt('Введите обязательную статью расходов в этом месяце');
 //     answer2 = +prompt('Во сколько обойдется?');
-    
+
 //     if ( (typeof(answer1)) === 'string' && (typeof(answer1))!= null && 
 //          (typeof(answer2))!= null && answer1 != '' && answer2 != '' && 
 //          answer1.length < 50 ) {
 //         console.log('done');
 //         appData.expenses[i] = (answer1 + ' : ' + answer2);
 //     } else {
-
+//           i--;
 //     }   
 //     i++;
 // } while(i < 2);
