@@ -21,8 +21,8 @@ for(let i = 0; i < 2; i++) {
     answer2 = +prompt('Во сколько обойдется?');
     
     if ( (typeof(answer1)) === 'string' && (typeof(answer1))!= null && 
-         (typeof(answer2))!= null && answer1 != '' && answer2 != '' && 
-         answer1.length < 50 ) {
+         (typeof(answer2)) != null && answer1 != '' && answer2 != '' && 
+         answer1.length < 50 && isNaN(answer1) && !isNaN(answer2) ) {
         console.log('done');
         appData.expenses[i] = (answer1 + ' : ' + answer2);
     } else {
