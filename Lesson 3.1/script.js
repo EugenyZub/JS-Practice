@@ -42,7 +42,6 @@ console.log('Квадратный корень из суммы кубов эле
 
         if(arg == 'number' || arg == 'underfind' || arg == '' || arg == null || typeof(arg) == 'number') {
             alert('Вы ввели не строку!');
-            //callback();
         } else {
             arg.trim();
             if (arg.length > 50) {
