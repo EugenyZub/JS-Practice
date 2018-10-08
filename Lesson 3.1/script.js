@@ -5,7 +5,6 @@ let str = "урок-3-был слишком легким";
 
 function stringWithFirstSymbolToUpperCase(str) {
     str = (str.charAt(0).toUpperCase() + str.slice(1)).replace(/-/g, ' ');
-    //console.log(str);
     return str;
 }
 let str2 = stringWithFirstSymbolToUpperCase(str);
@@ -39,7 +38,6 @@ let cubs = Cubs();
 console.log('Квадратный корень из суммы кубов элементов массива arr равен ' + cubs);
 
 //Создайте функцию, которая принимает 1 аргумент (название произвольное)
-    //let testArg = prompt('Введите какую-нибудь строку');
     let testArg = 12344;
     function testFunc(arg) {
         console.log(typeof(arg) + " " + arg);
