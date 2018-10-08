@@ -14,10 +14,6 @@ console.log(str2);
 //Из получившейся строки вырезать слово “легким”, в этом же слове заменить 
 //2 последние буквы на букву “о”
 function replacedWord(str) {
-    // let foundWord = str.match(/легким/ig);
-    // let word = foundWord.toString();
-    // let cutingPartOfWord = word.slice(0,word.length-2);
-    // let resultingWord = cutingPartOfWord + 'оо';
     let foundWord = str.match(/легким/ig).toString().slice(0,-3) + 'оо';
     alert(foundWord);
 }
