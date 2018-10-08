@@ -35,12 +35,12 @@ let cubs = Cubs();
 console.log('Квадратный корень из суммы кубов элементов массива arr равен ' + cubs);
 
 //Создайте функцию, которая принимает 1 аргумент (название произвольное)
-    let testArg = 'sadasd';
+    let testArg = 'sdfssd';
 
     function testFunc(arg) {
         console.log(typeof(arg) + " " + arg);
 
-        if(arg == 'number' || arg == 'underfind' || arg == '' || arg == null || typeof(arg) == 'number') {
+        if(typeof(arg) == 'number' || arg == 'underfind' || arg == '' || arg == null ) {
             alert('Вы ввели не строку!');
         } else {
             arg.trim();
