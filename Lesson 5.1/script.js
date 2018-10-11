@@ -1,27 +1,39 @@
 'use strict';
 
-let months = ["01", "02", "03", "03", "05", "06", 
-              "07", "08", "09", "10", "11", "12"],
-    date = [],
-    day = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-
 //09:59:59 30.05.2018
 let myDate = new Date(2018, 5, 30, 9, 59, 59);
+let myDate2 = new Date(2018, 4, 30);
 
 let fullDate = "'" + myDate.getHours() + ":" + myDate.getMinutes() + ":" +
-               myDate.getSeconds() + " " + myDate.getDate() + ":" + 
-               myDate.getMonth() + ":" + myDate.getFullYear() + ", " + day[myDate.getDay()] + "'";
+               myDate.getSeconds() + " " + addZero(myDate.getDate(), myDate.getMonth()) + 
+               ":" + myDate.getFullYear() + ", " + dayOfWeek(myDate2.getDay()) + "'";
 
-document.write(fullDate); 
-console.log(myDate.getDay());
+document.write(fullDate);
 //Напишите функцию, которая будет добавлять 0 перед днями и месяцами, 
 //которые состоят из одной цифры (из 1.6.2018 сделает 01.06.2018)
-function addZero() {
-    
+// первые "00" нуны из-за начала массива с 0 цифры и для корректного отображения
+function addZero(day, month) {
+
+    let newMonth = ["00" ,"01", "02", "03", "04", "05", 
+                    "06", "07", "08", "09", "10", "11", "12"];
+
+    let newDay = ["00", "01", "02", "03", "04", "05", 
+                  "06", "07", "08", "09", "10", "11", 
+                  "12", "13", "14", "15", "16", "17", 
+                  "18", "19", "20", "21", "22", "23", 
+                  "24", "25", "26", "27", "28", "29", 
+                  "30", "31"];
+
+    return (newDay[day] + ":" + newMonth[month]);
+
 }
 
 //Напишите функцию, которая выводит на страницу текущий день 
 //недели на русском языке (реализацию выбираете сами)
-function dayOfTheWeek(day) {
+function dayOfWeek(day) {
     
+    let newDay = ["Воскресенье", "Понедельник", "Вторник", 
+                  "Среда", "Четверг", "Пятница", "Суббота" ];
+
+    return (newDay[day]);    
 }
