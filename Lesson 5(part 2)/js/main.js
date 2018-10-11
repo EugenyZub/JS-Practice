@@ -1,14 +1,14 @@
 let start = document.getElementById('start'),
 
     //Блоки правой части программы
-    budeget = document.getElementsByClassName('budget-value'),
-    daybudget = document.getElementsByClassName('daybudget-value'),
-    level = document.getElementsByClassName('level-value'),
-    expenses = document.getElementsByClassName('expenses-value'),
-    optionalexpenses = document.getElementsByClassName('optionalexpenses-value'),
-    income = document.getElementsByClassName('income-value'),
-    monthsavings = document.getElementsByClassName('monthsavings-value'),
-    yearsavings = document.getElementsByClassName('yearsavings-value'),
+    budeget = document.getElementsByClassName('budget-value')[0],
+    daybudget = document.getElementsByClassName('daybudget-value')[0],
+    level = document.getElementsByClassName('level-value')[0],
+    expenses = document.getElementsByClassName('expenses-value')[0],
+    optionalexpenses = document.getElementsByClassName('optionalexpenses-value')[0],
+    income = document.getElementsByClassName('income-value')[0],
+    monthsavings = document.getElementsByClassName('monthsavings-value')[0],
+    yearsavings = document.getElementsByClassName('yearsavings-value')[0],
 
     //Обязательные расходы
     expensesItem = document.querySelectorAll('.expenses-item'),
@@ -55,7 +55,7 @@ console.log(income);
 console.log(monthsavings);
 console.log(yearsavings);
 
-console.log('Обязательными расходами');
+console.log('Обязательныме расходы');
 console.log(expensesItem);
 
 console.log('Кнопки');
