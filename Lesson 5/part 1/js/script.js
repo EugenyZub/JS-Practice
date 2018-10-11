@@ -3,9 +3,10 @@ let menu = document.getElementsByClassName('menu-item'),
     allMenu = document.querySelector('ul'),
     newLi = document.createElement('li');
 
-menu[1].textContent = 'Второй пункт';
-menu[2].textContent = 'Третий пункт';
-menu[3].textContent = 'Четвёртый пункт';
+//menu[1].textContent = 'Второй пункт';
+//menu[2].textContent = 'Третий пункт';
+allMenu.insertBefore(menu[2],menu[1]);
+
 
 newLi.className = 'menu-item';
 newLi.textContent = 'Пятый пункт';
