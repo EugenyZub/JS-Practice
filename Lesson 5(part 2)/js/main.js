@@ -55,7 +55,7 @@ console.log(income);
 console.log(monthsavings);
 console.log(yearsavings);
 
-console.log('Обязательныме расходы');
+console.log('Обязательные расходы');
 console.log(expensesItem);
 
 console.log('Кнопки');
