@@ -42,4 +42,35 @@ let start = document.getElementById('start'),
     //День
     day = document.querySelector('.day-value'); 
 
-//console.log(day);
+    //Вывод получившихся значений
+console.log(start);
+
+console.log('Блоки правой части программы');
+console.log(budeget);
+console.log(daybudget);
+console.log(level);
+console.log(expenses);
+console.log(optionalexpenses);
+console.log(income);
+console.log(monthsavings);
+console.log(yearsavings);
+
+console.log('Обязательными расходами');
+console.log(expensesItem);
+
+console.log('Кнопки');
+console.log(approveExpenses);
+console.log(approveOptionalExpenses);
+console.log(calculate);
+
+console.log('Необязательные расходы, Возможный доход');
+console.log(optionalExpensesItem);
+console.log(chooseIncome);
+
+console.log('Чекбокс, Сумма, Процент, Год, Месяц, День');
+console.log(checksavings);
+console.log(sum);
+console.log(percent);
+console.log(year);
+console.log(month);
+console.log(day);
