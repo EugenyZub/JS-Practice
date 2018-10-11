@@ -6,7 +6,6 @@ function getFriendlyNumbers(start, end) {
             return false;
     } else {
         //console.log('all right');
-
         let firstNumber,
             secondNumber,
             firstDividersSum,
@@ -57,7 +56,7 @@ function getFriendlyNumbers(start, end) {
         return arr;
     }
 }
-getFriendlyNumbers(1, 1);
+getFriendlyNumbers(1, 5000);
 
 module.exports = {
     firstName: 'Name',
