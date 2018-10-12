@@ -5,15 +5,17 @@
 let myDate = new Date();
 let data1 = document.querySelector('#data1'),
     data2 = document.getElementById('data2'),
-    start = document.querySelector('#start');
+    start = document.querySelector('#start'),
+    end = document.querySelector('#result');
 
-    datadDifference(data1, data2);
-
+    console.log(end);
 let fullDate = "'" + myDate.getHours() + ":" + myDate.getMinutes() + ":" +
                myDate.getSeconds() + " " + addZero(myDate.getDate(), myDate.getMonth()) + 
                ":" + myDate.getFullYear() + ", " + dayOfWeek(myDate.getDay()) + "'";
 
 document.write(fullDate);
+
+datadDifference(data1, data2);
 //Напишите функцию, которая будет добавлять 0 перед днями и месяцами, 
 //которые состоят из одной цифры (из 1.6.2018 сделает 01.06.2018)
 function addZero(day, month) {
@@ -37,7 +39,6 @@ function addZero(day, month) {
         }
 }
     return (newDay[day] + ":" + newMonth[month]);
-
 }
 
 //Напишите функцию, которая выводит на страницу текущий день 
@@ -97,6 +98,7 @@ function datadDifference(data1, data2) {
             date2Month = parseInt(arrData2[1]);
             date2Day = parseInt(arrData2[2]);
 
+            
             //получаем милисекунды до 1970 года
             let DATA1 = new Date(date1Year, date1Month-1, date1Day).getTime();
             let DATA2 = new Date(date2Year, date2Month-1, date2Day).getTime();
@@ -120,29 +122,57 @@ function datadDifference(data1, data2) {
                 DATA2 -= DATA2*(-1);                
             }
             
+            //Вывод прямо на экран
+            // if(negativeDate > 0) {
+
+            //     if (result == 1) {
+            //         document.write('До этой даты вам осталось ждать ' + result + ' день!');                   
+            //     } else if(result == 2 || result == 3 || result == 4) {
+            //         document.write('До этой даты вам осталось ждать ' + result + ' дня!');   
+            //     } else {
+            //         document.write('До этой даты вам осталось ждать ' + result + ' дней!');    
+            //     }
+
+            // } else if(negativeDate < 0) {
+
+            //     if (result == 1) {
+            //         document.write('С этого момента прошёл ' + result + ' день!');
+            //     } else if(result == 2 || result == 3 || result == 4) {
+            //         document.write('С этого момента прошло ' + result + ' дня!');
+            //     } else {
+            //         document.write('С этого момента уже прошло ' + result + ' дней!');
+            //     }
+                
+            // } else {
+            //     document.write('Обе даты одинаковы');
+            // }
+
+            //Вывод в инпут
             if(negativeDate > 0) {
 
                 if (result == 1) {
-                    document.write('До этой даты вам осталось ждать ' + result + ' день!');                   
+                    end.value = (result + ' день');                   
                 } else if(result == 2 || result == 3 || result == 4) {
-                    document.write('До этой даты вам осталось ждать ' + result + ' дня!');   
+                    end.value = (result + ' дня');   
                 } else {
-                    document.write('До этой даты вам осталось ждать ' + result + ' дней!');    
+                    end.value = (result + ' дней');    
                 }
 
             } else if(negativeDate < 0) {
 
                 if (result == 1) {
-                    document.write('С этого момента прошёл ' + result + ' день!');
+                    end.value = (result + ' день');
                 } else if(result == 2 || result == 3 || result == 4) {
-                    document.write('С этого момента прошло ' + result + ' дня!');
+                    end.value = (result + ' дня');
                 } else {
-                    document.write('С этого момента уже прошло ' + result + ' дней!');
+                    end.value = (result + ' дней');
                 }
                 
             } else {
-                document.write('Обе даты одинаковы');
+                end.value = ('Обе даты одинаковы');
             }
+
+            negativeDate = 0;
         });
 
     });
