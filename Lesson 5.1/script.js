@@ -8,9 +8,9 @@ let data1 = document.querySelector('#data1'),
     start = document.querySelector('#start'),
     end = document.querySelector('#result');
 
-let fullDate = "'" + myDate.getHours() + ":" + addZeroToMinutes(myDate.getMinutes()) + ":" +
-               myDate.getSeconds() + " " + addZero(myDate.getDate(), myDate.getMonth()) + 
-               ":" + myDate.getFullYear() + ", " + dayOfWeek(myDate.getDay()) + "'";
+let fullDate =  "'" + myDate.getHours() + ":" + addZeroToMinutes(myDate.getMinutes(),myDate.getSeconds()) + 
+                " " + addZero(myDate.getDate(), myDate.getMonth()) + ":" + 
+                myDate.getFullYear() + ", " + dayOfWeek(myDate.getDay()) + "'";
 
 document.write(fullDate);
 
@@ -40,8 +40,10 @@ function addZero(day, month) {
     return (newDay[day] + ":" + newMonth[month]);
 }
 
-function addZeroToMinutes(minute) {
-    let newMinute = [];
+function addZeroToMinutes(minute, seconds) {
+    let newMinute = [],
+        newSecond = [];
+
         for( let i = 0; i < 60 ; i++) {
             if( i < 10){
                 newMinute.push('0' + i);
@@ -49,7 +51,16 @@ function addZeroToMinutes(minute) {
                 newMinute.push(i);
             }
         }
-        return(newMinute[minute]);
+
+        for( let i = 0; i < 60 ; i++) {
+            if( i < 10){
+                newSecond.push('0' + i);
+            } else {
+                newSecond.push(i);
+            }
+        }
+
+        return(newMinute[minute] + ":" + newSecond[seconds]);
 }
 
 //Напишите функцию, которая выводит на страницу текущий день 

@@ -71,7 +71,6 @@ let start = document.getElementById('start'),
     //Обязательные расходы
     approveExpenses.addEventListener('click', function() {
         let sum = 0;
-
         for(let i = 0; i < expensesItem.length; i++) {
            let  answer1 = expensesItem[i].value,
                 answer2 = expensesItem[++i].value;
@@ -86,7 +85,7 @@ let start = document.getElementById('start'),
                 i--;
             }
         }
-        approveExpenses.disabled = false;
+        
         expenses.textContent = sum;
         
     });
