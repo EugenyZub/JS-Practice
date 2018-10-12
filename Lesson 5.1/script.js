@@ -8,8 +8,8 @@ let data1 = document.querySelector('#data1'),
     start = document.querySelector('#start'),
     end = document.querySelector('#result');
 
-let fullDate =  "'" + myDate.getHours() + ":" + addZeroToMinutes(myDate.getMinutes(),myDate.getSeconds()) + 
-                " " + addZero(myDate.getDate(), myDate.getMonth()) + ":" + 
+let fullDate =  "'" + myDate.getHours() + ":" + addZero(myDate.getMinutes()) + ":" + addZero(myDate.getSeconds()) + 
+                " " + addZero(myDate.getDate()) + ":" + addZero(myDate.getMonth()) + ":" + 
                 myDate.getFullYear() + ", " + dayOfWeek(myDate.getDay()) + "'";
 
 document.write(fullDate);
@@ -17,52 +17,13 @@ document.write(fullDate);
 datadDifference(data1, data2);
 //Напишите функцию, которая будет добавлять 0 перед днями и месяцами, 
 //которые состоят из одной цифры (из 1.6.2018 сделает 01.06.2018)
-function addZero(day, month) {
-
-    let newMonth = [],
-        newDay = [];
-
-    for(let i = 1; i < 13; i++) {
-        if( i < 10){
-            newMonth.push('0' + i);
-        } else {
-            newMonth.push(i);
-        }
+function addZero(dateNumber){
+    if (dateNumber > 0 && dateNumber < 10) { 
+        return '0' + dateNumber;
+    } else {
+        return dateNumber;
     }
-
-    for(let i = 0; i < 32; i++) {
-        if( i < 10){
-            newDay.push('0' + i);
-        } else {
-            newDay.push(i);
-        }
 }
-    return (newDay[day] + ":" + newMonth[month]);
-}
-
-function addZeroToMinutes(minute, seconds) {
-    let newMinute = [],
-        newSecond = [];
-
-        for( let i = 0; i < 60 ; i++) {
-            if( i < 10){
-                newMinute.push('0' + i);
-            } else {
-                newMinute.push(i);
-            }
-        }
-
-        for( let i = 0; i < 60 ; i++) {
-            if( i < 10){
-                newSecond.push('0' + i);
-            } else {
-                newSecond.push(i);
-            }
-        }
-
-        return(newMinute[minute] + ":" + newSecond[seconds]);
-}
-
 //Напишите функцию, которая выводит на страницу текущий день 
 //недели на русском языке (реализацию выбираете сами)
 function dayOfWeek(day) {
