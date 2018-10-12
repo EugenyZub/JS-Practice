@@ -90,18 +90,27 @@ function datadDifference(data1, data2) {
             arrData2 = secondDate.split('-');
 
             //Превращаем элементы массивов в отдельные числа
-            date1Year = parseInt(arrData1[0]);
-            date1Month = parseInt(arrData1[1]);
-            date1Day = parseInt(arrData1[2]);
-
-            date2Year = parseInt(arrData2[0]);
-            date2Month = parseInt(arrData2[1]);
-            date2Day = parseInt(arrData2[2]);
-
+            // date1Year = parseInt(arrData1[0]);
+            // date1Month = parseInt(arrData1[1]);
+            // date1Day = parseInt(arrData1[2]);
             
+            // date2Year = parseInt(arrData2[0]);
+            // date2Month = parseInt(arrData2[1]);
+            // date2Day = parseInt(arrData2[2]);
+
+            //Массив из числе входящих в data1
+            arrData1.forEach(function(element, i) {
+                arrData1[i] = parseInt(arrData1[i]);
+            });
+
+            //Массив из числе входящих в data2
+            arrData2.forEach(function(element, i) {
+                arrData2[i] = parseInt(arrData2[i]);
+            });            
+               
             //получаем милисекунды до 1970 года
-            let DATA1 = new Date(date1Year, date1Month-1, date1Day).getTime();
-            let DATA2 = new Date(date2Year, date2Month-1, date2Day).getTime();
+            let DATA1 = new Date(arrData1[0], arrData1[1]-1, arrData1[2]).getTime();
+            let DATA2 = new Date(arrData2[0], arrData2[1]-1, arrData2[2]).getTime();
 
             //Количество дней
             if(DATA1 < DATA2) {
