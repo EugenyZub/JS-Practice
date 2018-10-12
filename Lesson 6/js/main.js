@@ -65,7 +65,7 @@ let start = document.getElementById('start'),
         //calculate.disabled = false;
         calculate.removeAttribute('disabled');
         approveExpenses.removeAttribute('disabled');
-        
+        approveOptionalExpenses.removeAttribute('disabled');
     });
 
     //Обязательные расходы
