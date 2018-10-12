@@ -2,10 +2,10 @@ let start = document.getElementById('start'),
 
     //Блоки правой части программы
     budeget = document.getElementsByClassName('budget-value')[0],
-    daybudget = document.getElementsByClassName('daybudget-value')[0],
+    dayBudget = document.getElementsByClassName('daybudget-value')[0],
     level = document.getElementsByClassName('level-value')[0],
     expenses = document.getElementsByClassName('expenses-value')[0],
-    optionalexpenses = document.getElementsByClassName('optionalexpenses-value')[0],
+    optionalExpenses = document.getElementsByClassName('optionalexpenses-value')[0],
     income = document.getElementsByClassName('income-value')[0],
     monthsavings = document.getElementsByClassName('monthsavings-value')[0],
     yearsavings = document.getElementsByClassName('yearsavings-value')[0],
@@ -55,7 +55,62 @@ let start = document.getElementById('start'),
         appData.finance = money;
         appData.timeData = time;
         budeget.textContent = money.toFixed();
-        yearsavings.value = new Date(Date.parse(time)).getFullYear();
+        year.value = new Date(Date.parse(time)).getFullYear();
+        month.value = new Date(Date.parse(time)).getMonth() + 1;
+        day.value = new Date(Date.parse(time)).getDate();
+    });
+
+    approveExpenses.addEventListener('click', function() {
+        let sum = 0;
+
+        for(let i = 0; i < expensesItem.length; i++) {
+           let  answer1 = expensesItem[i].value,
+                answer2 = expensesItem[++i].value;
+        //    prompt('Введите обязательную статью расходов в этом месяце', ''),
+        //        answer2 = +prompt('Во сколько обойдется?', '');
+            
+            if ( (typeof(answer1)) === 'string' && (typeof(answer1))!= null && 
+                 (typeof(answer2)) != null && answer1 != '' && answer2 != '' && 
+                 answer1.length < 50 && isNaN(answer1) && !isNaN(answer2) ) {
+                console.log('done');
+                appData.expenses[answer1] = answer2;
+                sum += +answer2;
+            } else {
+                i--;
+            }
+        }
+        expenses.textContent = sum;
+    });
+
+    approveOptionalExpenses.addEventListener('click', function() {
+        for( let i = 0; i < optionalExpensesItem.length; i++) {
+            let answer3 = optionalExpensesItem[i].value;
+            appData.optionalExpenses[i] = answer3;
+            optionalExpenses.textContent += appData.optionalExpenses[i] + ' ';
+        }
+        console.log(optionalExpenses);
+    });
+
+    calculate.addEventListener('click', function() {
+
+        if (appData.finance != undefined) {
+            appData.moneyPerDay = (appData.finance/30).toFixed();
+            dayBudget.textContent = appData.moneyPerDay;
+
+            if(appData.moneyPerDay < 100) {
+                level.textContent = 'Минимальный уровень достатка';
+            } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
+                level.textContent = 'Средний уровень достатка';            
+            } else if (appData.moneyPerDay > 2000) {
+                level.textContent = 'Высокий уровень достатка';            
+            } else {
+                level.textContent = 'Произошла ошибка';            
+            }
+        } else {
+            dayBudget.textContent = 'Произошла ошибка';
+        }
+
+        console.log(appData.budget);
     });
 
     let appData = {
@@ -67,34 +122,14 @@ let start = document.getElementById('start'),
         savings: true,
         moneyPerDay: 0,
         chooseExpenses: function() {
-            for(let i = 0; i < 2; i++) {
-                answer1 = prompt('Введите обязательную статью расходов в этом месяце', '');
-                answer2 = +prompt('Во сколько обойдется?', '');
-                
-                if ( (typeof(answer1)) === 'string' && (typeof(answer1))!= null && 
-                     (typeof(answer2)) != null && answer1 != '' && answer2 != '' && 
-                     answer1.length < 50 && isNaN(answer1) && !isNaN(answer2) ) {
-                    console.log('done');
-                    appData.expenses[answer1] = answer2;
-                } else {
-                    i--;
-                }
-            }
+            
         },
-        detectDayBudget: function(budget) {
-            appData.moneyPerDay = (budget/30).toFixed();
+        detectDayBudget: function() {
+            
         alert('Бюджет на 1 день: ' + appData.moneyPerDay);
         },
-        detectLevel: function(moneyPerDay) {
-            if(moneyPerDay < 100) {
-                console.log('Минимальный уровень достатка');
-            } else if (moneyPerDay > 100 && moneyPerDay < 2000) {
-                console.log('Средний уровень достатка');
-            } else if (moneyPerDay > 2000) {
-                console.log('Высокий уровень достатка');
-            } else {
-                console.log('Произошла ошибка');
-            }
+        detectLevel: function() {
+            
         },
         checkSavings: function() {
             if(appData.savings == true) {
@@ -106,11 +141,7 @@ let start = document.getElementById('start'),
             }
         },
         chooseOptExpenses: function(optionalExpenses) {
-            for( let i = 0; i < 3; i++) {
-                let answer3 = prompt('Статья необязательных расходов?', '');
-                optionalExpenses[i] = answer3;
-            }
-            console.log(optionalExpenses);
+            
         },
         chooseIncome: function() {            
             let items = prompt('Что принесёт дополнительный доход? (Перечислите через запятую)', '');            
@@ -130,9 +161,7 @@ let start = document.getElementById('start'),
                                 item.slice(1) + '<br>');
             });        
         }
-    },  
-        answer1,
-        answer2;
+    };
 
 
 
@@ -152,10 +181,10 @@ console.log(start);
 
 console.log('Блоки правой части программы');
 console.log(budeget);
-console.log(daybudget);
+console.log(dayBudget);
 console.log(level);
 console.log(expenses);
-console.log(optionalexpenses);
+console.log(optionalExpenses);
 console.log(income);
 console.log(monthsavings);
 console.log(yearsavings);
