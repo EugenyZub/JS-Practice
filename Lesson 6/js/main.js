@@ -43,11 +43,7 @@ let start = document.getElementById('start'),
     day = document.querySelector('.day-value'); 
 
     let money, time;
-
-    //отключение кнопок
-    approveExpenses.disabled = true;
-    approveOptionalExpenses.disabled = true;
-    calculate.disabled = true;
+    console.log(expensesItem.textContent);
 
     //Старт
     start.addEventListener('click', function() {
@@ -66,8 +62,12 @@ let start = document.getElementById('start'),
         day.value = new Date(Date.parse(time)).getDate();
 
         //Включение кнопки "рассчитать бюджет"
-        calculate.disabled = false;
+        //calculate.disabled = false;
+        calculate.removeAttribute('disabled');
+        approveExpenses.removeAttribute('disabled');
+        
     });
+
     //Обязательные расходы
     approveExpenses.addEventListener('click', function() {
         let sum = 0;
@@ -85,9 +85,8 @@ let start = document.getElementById('start'),
                 i--;
             }
         }
-        
-        expenses.textContent = sum;
-        
+
+        expenses.textContent = sum;   
     });
     //Необязательные расходы
     approveOptionalExpenses.addEventListener('click', function() {
@@ -96,8 +95,8 @@ let start = document.getElementById('start'),
             appData.optionalExpenses[i] = answer3;
             optionalExpenses.textContent += appData.optionalExpenses[i] + ' ';
         }
-        approveOptionalExpenses.disabled = false;
-    });
+    });  
+
     //Кнопка "рассчитать", уровень достатка и бюджет на день. Учтены траты на месяц
     calculate.addEventListener('click', function() {
 
@@ -169,39 +168,3 @@ let start = document.getElementById('start'),
         savings: false,
         moneyPerDay: 0
     };
-
-    
-
-
-//Вывод получившихся значений
-console.log(start);
-
-console.log('Блоки правой части программы');
-console.log(budeget);
-console.log(dayBudget);
-console.log(level);
-console.log(expenses);
-console.log(optionalExpenses);
-console.log(income);
-console.log(monthSavings);
-console.log(yearSavings);
-
-console.log('Обязательные расходы');
-console.log(expensesItem);
-
-console.log('Кнопки');
-console.log(approveExpenses);
-console.log(approveOptionalExpenses);
-console.log(calculate);
-
-console.log('Необязательные расходы, Возможный доход');
-console.log(optionalExpensesItem);
-console.log(chooseIncome);
-
-console.log('Чекбокс, Сумма, Процент, Год, Месяц, День');
-console.log(checkSavings);
-console.log(sum);
-console.log(percent);
-console.log(year);
-console.log(month);
-console.log(day);
