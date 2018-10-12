@@ -135,29 +135,26 @@ let start = document.getElementById('start'),
     //Сумма
     sum.addEventListener('input', function() {
         if(appData.savings == true) {
-            let sumValue = +sum.value,
-                percentValue = +percent.value;
-
-            appData.monthIncome = sumValue/100/12*percentValue;
-            appData.yearIncome = sumValue/100*percentValue;
-
-            monthSavings.textContent = appData.monthIncome.toFixed(1);
-            yearSavings.textContent = appData.yearIncome.toFixed(1);
+            incomeSavingth();
         }
     });
     //Проценты
     percent.addEventListener('input', function() {
         if(appData.savings == true) {
-            let sumValue = +sum.value,
-                percentValue = +percent.value;
-
-            appData.monthIncome = sumValue/100/12*percentValue;
-            appData.yearIncome = sumValue/100/percentValue;
-
-            monthSavings.textContent = appData.monthIncome.toFixed(1);
-            yearSavings.textContent = appData.yearIncome.toFixed(1);
+            incomeSavingth();
         }
     });
+
+    function incomeSavingth() {  
+        let sumValue = +sum.value,
+            percentValue = +percent.value;
+
+        appData.monthIncome = sumValue/100/12*percentValue;
+        appData.yearIncome = sumValue/100*percentValue;
+
+        monthSavings.textContent = appData.monthIncome.toFixed(1);
+        yearSavings.textContent = appData.yearIncome.toFixed(1);
+    }
 
     let appData = {
         finance: money,
