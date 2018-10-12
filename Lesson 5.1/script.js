@@ -8,7 +8,7 @@ let data1 = document.querySelector('#data1'),
     start = document.querySelector('#start'),
     end = document.querySelector('#result');
 
-let fullDate = "'" + myDate.getHours() + ":" + myDate.getMinutes() + ":" +
+let fullDate = "'" + myDate.getHours() + ":" + addZeroToMinutes(myDate.getMinutes()) + ":" +
                myDate.getSeconds() + " " + addZero(myDate.getDate(), myDate.getMonth()) + 
                ":" + myDate.getFullYear() + ", " + dayOfWeek(myDate.getDay()) + "'";
 
@@ -38,6 +38,18 @@ function addZero(day, month) {
         }
 }
     return (newDay[day] + ":" + newMonth[month]);
+}
+
+function addZeroToMinutes(minute) {
+    let newMinute = [];
+        for( let i = 0; i < 60 ; i++) {
+            if( i < 10){
+                newMinute.push('0' + i);
+            } else {
+                newMinute.push(i);
+            }
+        }
+        return(newMinute[minute]);
 }
 
 //Напишите функцию, которая выводит на страницу текущий день 
