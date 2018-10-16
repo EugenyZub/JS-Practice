@@ -45,14 +45,14 @@ let start = document.getElementById('start'),
     optionalExpenses1 = document.getElementById('optionalexpenses_1'),
     optionalExpenses2 = document.getElementById('optionalexpenses_2'),
     optionalExpenses3 = document.getElementById('optionalexpenses_3'),
-
+    
     expencesItem1 = document.getElementById('expenses_2'),
     expencesItem2 = document.getElementById('expenses_4'),
 
     money, 
     time;
     console.log(expensesItem.textContent);
-
+    console.log(optionalExpenses1);
     //Старт
     start.addEventListener('click', function() {
         time = prompt('Введите дату в формате YYYY-MM-DD', '');

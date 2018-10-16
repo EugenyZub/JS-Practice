@@ -1,6 +1,4 @@
 'use strict';
-
-//09:59:59 30.05.2018
 //вводить месяц на единицу меньше, из-за особенностей объекта Date 
 let myDate = new Date();
 let data1 = document.querySelector('#data1'),

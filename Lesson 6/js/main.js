@@ -62,7 +62,6 @@ let start = document.getElementById('start'),
         day.value = new Date(Date.parse(time)).getDate();
 
         //Включение кнопки "рассчитать бюджет"
-        //calculate.disabled = false;
         calculate.removeAttribute('disabled');
         approveExpenses.removeAttribute('disabled');
         approveOptionalExpenses.removeAttribute('disabled');
@@ -116,7 +115,6 @@ let start = document.getElementById('start'),
         } else {
             dayBudget.textContent = 'Произошла ошибка';
         }
-        //console.log(appData.budget);
     });
     //Воможный доход
     chooseIncome.addEventListener('input', function() {
