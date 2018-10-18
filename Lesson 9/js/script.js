@@ -37,10 +37,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
     //Timer
     
-    let deadline = '2018-10-18';
+    let deadline = '2018-10-19';
     //Получаем разницу во времени между конечной датой и настоящим временем
     function getTimeRemaining(endtime) {
-        let t = Date.parse(endtime) - Date.parse(new Date()),
+        let x = new Date();
+        let y = x.getTimezoneOffset() * 60 * 1000;
+        console.log(y);
+        let t = Date.parse(endtime) - Date.parse(new Date()) + y,
             seconds = addZero(Math.floor((t/1000) % 60)),
             minutes = addZero(Math.floor((t/1000/ 60) % 60)),
             hours = addZero(Math.floor((t/(1000*60*60))));
