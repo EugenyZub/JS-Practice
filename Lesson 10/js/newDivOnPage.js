@@ -1,7 +1,7 @@
 'use strict';
 
 class Options {
-    constructor (bg = 'lightblue', fontSize = 20, textAlign = 'center', height = 50, width = 50) {
+        constructor (bg, fontSize, textAlign, height, width){
         this.height  = height;
         this.width = width; 
         this.bg = bg;
