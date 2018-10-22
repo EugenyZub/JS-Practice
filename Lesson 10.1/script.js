@@ -1,7 +1,7 @@
 'use strict';
 
-window.addEventListener("DOMContentLoaded", () => {
 
+window.addEventListener("DOMContentLoaded", () => {
     function cursorPosition(position, element) {
         element.focus();
     
@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     //Маска
     function mask(e) {
-        let mask = "+_ (___) ___-____", //Внешний вид маски
+        let mask = this.defaultValue, //Внешний вид маски
             i = 0,
             def = mask.replace(/\D/g, ""),
             val = this.value.replace(/\D/g, "");// \D - любой нецифровой символ
@@ -28,18 +28,37 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         this.value = mask.replace(/./g, function(a) {
-            return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
-        });
+            //return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
+            if (/[_\d]/.test(a) && i < val.length) {
+                return val.charAt(i++) || "_";
+            } 
+
+            this.value = mask;
+            i = mask.lastIndexOf(val.substr(-1));
+            i < mask.length && mask != this.defaultValue ? i++ : i = mask.indexOf("_");
+            if(i < mask.length && mask != this.defaultValue) {
+                return i++;
+            } else {
+                i = mask.indexOf("_");
+                return i;
+            }
+        //     else if (i >= val.length) {
+        //         return "";
+        //     } else {
+        //         return a;
+        //     }
+        // });
 
         //место ввода сохранится, если будет введено 2 и более символа
-        if (e.type == "blur") {
-            if (this.value.length == 2){
-                this.value = "";
-            } 
-        } else {
+        // if (e.type == "blur") {
+        //     if (this.value.length == 2){
+        //         this.value = "";
+        //     } 
+        // } else {
             cursorPosition(this.value.length, this);
-        }
-    }
+        // }
+    });
+}
 
     let input = document.querySelector("#tel");
     input.addEventListener("input", mask);
