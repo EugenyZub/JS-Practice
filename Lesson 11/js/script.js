@@ -4,6 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let tab = document.querySelectorAll('.info-header-tab'),
         info = document.querySelector('.info-header'),
         tabContent = document.querySelectorAll('.info-tabcontent');
+    const anchors = document.querySelectorAll('a[href*="#"]');
 
     //Скрытие всех пунктов кроме текущего
     function hideTabContent(a) {
@@ -35,8 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Timer
-    
+
+    //Timer   
     let deadline = '2018-10-19';
     //Получаем разницу во времени между конечной датой и настоящим временем
     function getTimeRemaining(endtime) {
@@ -87,11 +88,10 @@ window.addEventListener('DOMContentLoaded', () => {
             return dateNumber;
         }
     }
-
     setClock('timer', deadline);
 
-    //Modal
 
+    //Modal
     let more = document.querySelectorAll('.more'),
         overlay = document.querySelector('.overlay'),
         close = document.querySelector('.popup-close');
@@ -113,8 +113,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     //Form
-
-    let message = {
+   let message = {
         loading: 'Загрузка...',
         success: 'Спасибо! Скоро мы с вами свяжемся!',
         failure: 'Что-то пошло не так'
@@ -168,6 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     });
 
+
     //Conact-Form
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -216,4 +216,18 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Плавная прокрутка страницы
+    for (let anchor of anchors) {
+        anchor.addEventListener('click', (e) => {
+          e.preventDefault();
+        
+          const blockID = anchor.getAttribute('href');
+          
+          document.querySelector(blockID).scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+      
+        });
+      }
 });
