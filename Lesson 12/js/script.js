@@ -6,6 +6,21 @@ window.addEventListener('DOMContentLoaded', () => {
         tabContent = document.querySelectorAll('.info-tabcontent');
     const anchors = document.querySelectorAll('a[href*="#"]');
 
+    // Плавная прокрутка страницы
+    for (let anchor of anchors) {
+        anchor.addEventListener('click', (e) => {
+          e.preventDefault();
+        
+          const blockID = anchor.getAttribute('href');
+          
+          document.querySelector(blockID).scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+      
+        });
+      }
+
     //Скрытие всех пунктов кроме текущего
     function hideTabContent(a) {
         for( let i = a; i < tabContent.length; i++) {
@@ -22,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
             tabContent[b].classList.add('show');
         }
     }
+
     //Изменения табов с информацией
     info.addEventListener('click', (e) => {
         let target = e.target;
@@ -119,100 +135,121 @@ window.addEventListener('DOMContentLoaded', () => {
         failure: 'Что-то пошло не так'
     };
 
-    let form = document.querySelector('.main-form'),
-        input = form.getElementsByTagName('input'),
-        statusMessage = document.createElement('div'),   
-        contactForm = document.querySelector('#form'),
-        contactInputs = contactForm.getElementsByTagName('input'),
+    let form = document.querySelector('.main-form'),                        //модальное окно
+        input = form.getElementsByTagName('input'),                         
         tel = document.getElementById('phone'),
-        contactPhone = document.getElementById('contact-phone'),
-        formData = new FormData(form),
-        contactFormData = new FormData(contactForm);
 
-        statusMessage.classList.add('Status');
-        numbers(contactPhone);
-        numbers(tel);
+        contactForm = document.querySelector('#form'),                      //большая форма внизу
+        contactInputs = contactForm.getElementsByTagName('input'),
+        contactPhone = document.getElementById('contact-phone'), 
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+        statusMessage = document.createElement('div');  
 
-        let request = new XMLHttpRequest();
-        request.open('POST', 'server.php');
-        //request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    statusMessage.classList.add('Status');
+    numbers(contactPhone);
+    numbers(tel);
 
-        let formData = new FormData(form);
-
-        let obj = {};
-        formData.forEach(function(value, key) {
-            obj[key] = value;
-        });
-        let json = JSON.stringify(obj);
-
-        //request.send(formData);
-        request.send(json);
+    //отправка формы из модального окна
+    function sendForm(elem) {
+        elem.addEventListener('submit', function(e) {
+            e.preventDefault();
+                elem.appendChild(statusMessage);
+                let formData = new FormData(elem);
         
+                function  postDataMore(data) {
+                    return new Promise(function(resolve, reject) {
+                        let request = new XMLHttpRequest();
+                    
+                        request.open('POST', 'server.php');
+                        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
-        request.addEventListener('readystatechange', function(){
-            if (request.readyState < 4) {
-                statusMessage.innerHTML = message.loading;
-            } else if (request.readyState === 4 && request.status == 200) {
-                statusMessage.innerHTML = message.success;
-            } else {
-                statusMessage.innerHTML = message.failure;
-            }
+                        request.onreadystatechange = function() {
+                            if (request.readyState < 4) {
+                                resolve();
+                            } else if (request.readyState === 4) {
+                                if (request.status == 200) {
+                                    resolve();
+                                } else {
+                                    reject();
+                                }
+                            }
+                        };
+
+                        request.send(data);
+                    });
+                } //End Promise
+
+                //Очищение инпута формы после ввода отправки данных
+                function clearInput() {
+                    for(let i = 0; i < input.length; i++) {
+                        input[i].value = '';
+                    }
+                }
+
+            postDataMore(formData)
+                .then(()=> statusMessage.innerHTML = message.loading)
+                .then(()=> {
+                    thanksModal.style.diplay = 'block';
+                    statusMessage.innerHTML = '';
+                })
+                .catch(()=> statusMessage.innerHTML = message.failure)
+                .then(clearInput);
         });
+    }
 
-        for (let i = 0; i < input.length; i++) {
-            input[i].value = '';
-        }
-
-    });
+    sendForm(form);
 
 
     //Conact-Form
-    function  postData(data) {
-        return new Promise(function(resolve, reject) {
-            let contactRequest = new XMLHttpRequest();
+    function sendContactForm(elem) {
+        elem.addEventListener('submit', function(e) {
+            e.preventDefault();
+                elem.appendChild(statusMessage);
+                let contactFormData = new FormData(elem);
+        
+                function  postContactData(data) {
+                    return new Promise(function(resolve, reject) {
+                        let request = new XMLHttpRequest();
+                    
+                        request.open('POST', 'server.php');
+                        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
-            contactRequest.open('POST', 'server.php');
-            contactRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+                        request.onreadystatechange = function() {
+                            if (request.readyState < 4) {
+                                resolve();
+                            } else if (request.readyState === 4) {
+                                if (request.status == 200) {
+                                    resolve();
+                                } else {
+                                    reject();
+                                }
+                            }
+                        };
 
-            contactRequest.onreadystatechange = function() {
-                if (contactRequest.readyState < 4) {
-                    resolve();
-                } else if (contactRequest.readyState === 4) {
-                    if (contactRequest.status == 200 && contactRequest.status < 3) {
-                        resolve();
-                    } else {
-                        reject();
+                        request.send(data);
+                    });
+                } //End Promise
+
+                //Очищение инпута формы после ввода отправки данных
+                function clearInputs() {
+                    for(let i = 0; i < contactInputs.length; i++) {
+                        contactInputs[i].value = '';
                     }
                 }
-            };
 
-            contactRequest.send(data);
+            postContactData(contactFormData)
+                .then(()=> statusMessage.innerHTML = message.loading)
+                .then(()=> {
+                    thanksModal.style.diplay = 'block';
+                    statusMessage.innerHTML = '';
+                })
+                .catch(()=> statusMessage.innerHTML = message.failure)
+                .then(clearInputs);
+        
         });
-    } //End Promise
-
-    //Очищение инпутов формы после ввода отправки данных
-    function clearInput() {
-        for(let i = 0; i < contactInputs.length; i++) {
-            contactInputs[i].value = '';
-        }
     }
-
-    postData(contactFormData)
-        .then(()=> statusMessage.innerHTML = message.loading)
-        .then(()=> {
-            //thanksModal.style.diplay = 'block';
-            //mainModal.style.display = 'none';
-            statusMessage.innerHTML = '';
-        })
-        .catch(()=> statusMessage.innerHTML = message.failure)
-        .then(clearInput);
-
-    postData(contactForm);
-    // postData(formButton)
+  
+    sendContactForm(contactForm);
 
     //Только цифры и знак +
     function numbers(value) {
@@ -224,18 +261,5 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Плавная прокрутка страницы
-    for (let anchor of anchors) {
-        anchor.addEventListener('click', (e) => {
-          e.preventDefault();
-        
-          const blockID = anchor.getAttribute('href');
-          
-          document.querySelector(blockID).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-      
-        });
-      }
+    
 });
