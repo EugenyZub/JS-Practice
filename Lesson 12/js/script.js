@@ -155,30 +155,7 @@ window.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
                 elem.appendChild(statusMessage);
                 let formData = new FormData(elem);
-        
-                function  postDataMore(data) {
-                    return new Promise(function(resolve, reject) {
-                        let request = new XMLHttpRequest();
-                    
-                        request.open('POST', 'server.php');
-                        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-                        request.onreadystatechange = function() {
-                            if (request.readyState < 4) {
-                                resolve();
-                            } else if (request.readyState === 4) {
-                                if (request.status == 200) {
-                                    resolve();
-                                } else {
-                                    reject();
-                                }
-                            }
-                        };
-
-                        request.send(data);
-                    });
-                } //End Promise
-
+                       
                 //Очищение инпута формы после ввода отправки данных
                 function clearInput() {
                     for(let i = 0; i < input.length; i++) {
@@ -186,17 +163,16 @@ window.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-            postDataMore(formData)
+            postData(formData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
                     thanksModal.style.diplay = 'block';
                     statusMessage.innerHTML = '';
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)
-                .then(clearInput);
+                .then(clearInput);               
         });
     }
-
     sendForm(form);
 
 
@@ -237,7 +213,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-            postContactData(contactFormData)
+            postData(contactFormData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
                     thanksModal.style.diplay = 'block';
@@ -261,5 +237,27 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //Промис
+    function postData(data) {
+        return new Promise(function(resolve, reject) {
+            let request = new XMLHttpRequest();
+        
+            request.open('POST', 'server.php');
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+            request.onreadystatechange = function() {
+                if (request.readyState < 4) {
+                    resolve();
+                } else if (request.readyState === 4) {
+                    if (request.status == 200) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }
+            };
+            request.send(data);
+        });
+    } //End Promise
     
 });
