@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
         } else if (element.createTextRange) {
             let range = element.createTextRange();// Создаём объект TextRange 
             range.collapse(true); //объединение конечных точек диапазона
-            range.moveEnd("character", position); //сдвиг конечных точек диапахона на единицу текста
+            range.moveEnd("character", position); //сдвиг конечных точек диапазона на единицу текста
             range.moveStart("character", position);// в нашем случае это символ
             range.select(); //для формирования выделения на основе содержимого объекта TextRange
         }
@@ -42,12 +42,12 @@ window.addEventListener("DOMContentLoaded", () => {
                 i = mask.indexOf("_");
                 return i;
             }
-        //     else if (i >= val.length) {
-        //         return "";
-        //     } else {
-        //         return a;
-        //     }
-        // });
+            // else if (i >= val.length) {
+            //     return "";
+            // } else {
+            //     return a;
+            // }
+        });
 
         //место ввода сохранится, если будет введено 2 и более символа
         // if (e.type == "blur") {
