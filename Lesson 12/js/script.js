@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function getTimeRemaining(endtime) {
         let x = new Date();
         let y = x.getTimezoneOffset() * 60 * 1000;
-        console.log(y);
+        //console.log(y);
         let t = Date.parse(endtime) - Date.parse(new Date()) + y,
             seconds = addZero(Math.floor((t/1000) % 60)),
             minutes = addZero(Math.floor((t/1000/ 60) % 60)),
@@ -166,7 +166,6 @@ window.addEventListener('DOMContentLoaded', () => {
             postData(formData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
-                    thanksModal.style.diplay = 'block';
                     statusMessage.innerHTML = '';
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)
@@ -182,29 +181,6 @@ window.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
                 elem.appendChild(statusMessage);
                 let contactFormData = new FormData(elem);
-        
-                function  postContactData(data) {
-                    return new Promise(function(resolve, reject) {
-                        let request = new XMLHttpRequest();
-                    
-                        request.open('POST', 'server.php');
-                        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-                        request.onreadystatechange = function() {
-                            if (request.readyState < 4) {
-                                resolve();
-                            } else if (request.readyState === 4) {
-                                if (request.status == 200) {
-                                    resolve();
-                                } else {
-                                    reject();
-                                }
-                            }
-                        };
-
-                        request.send(data);
-                    });
-                } //End Promise
 
                 //Очищение инпута формы после ввода отправки данных
                 function clearInputs() {
@@ -216,7 +192,6 @@ window.addEventListener('DOMContentLoaded', () => {
             postData(contactFormData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
-                    thanksModal.style.diplay = 'block';
                     statusMessage.innerHTML = '';
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)

@@ -329,53 +329,46 @@ window.addEventListener('DOMContentLoaded', () => {
     numbersWithoutPlusAndE(persons);
     numbersWithoutPlusAndE(restDays);
 
-    // if(restDays.value == '' || persons.value == '') {
-    //     totalValue.innerHTML = 0;
-    // } else if (restDays.value != '' || persons.value == '') {
+    persons.addEventListener('change', function() {
+        personsSum = +this.value;
+        //Проверка, что число не удалено после рассчёта
+        if (persons.value == '') {
+            total = 0;
+        } else {
+            total = (daysSum + personsSum)*4000;
+        }
 
-        persons.addEventListener('change', function() {
-            personsSum = +this.value;
-            //Проверка, что число не удалено после рассчёта
-            if (persons.value == '') {
-                total = 0;
-            } else {
-                total = (daysSum + personsSum)*4000;
-            }
+        if (restDays.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            totalValue.innerHTML = total;
+        }
+    });
 
-            if (restDays.value == '') {
-                totalValue.innerHTML = 0;
-            } else {
-                totalValue.innerHTML = total;
-            }
-        });
+    restDays.addEventListener('change', function() {
+        daysSum = +this.value;
+        //Проверка, что число не удалено после рассчёта
+        if (restDays.value == '') {
+            total = 0;
+        } else {
+            total = (daysSum + personsSum)*4000;
+        }
 
-        restDays.addEventListener('change', function() {
-            daysSum = +this.value;
-            //Проверка, что число не удалено после рассчёта
-            if (restDays.value == '') {
-                total = 0;
-            } else {
-                total = (daysSum + personsSum)*4000;
-            }
+        if (persons.value == '') {
+            totalValue.innerHTML = 0;
+        }  else {
+            totalValue.innerHTML = total;
+        }
+    });
 
-            if (persons.value == '') {
-                totalValue.innerHTML = 0;
-            }  else {
-                totalValue.innerHTML = total;
-            }
-        });
-
-        place.addEventListener('change', function() {
-            if(restDays.value == '' || persons.value == '') {
-                total.value.innerHTML = 0;
-            } else {
-                let a = total;
-                totalValue.innerHTML = a * this.options[this.selectedIndex].value;
-            }
-        });
-    // }
-
-
+    place.addEventListener('change', function() {
+        if(restDays.value == '' || persons.value == '') {
+            total.value.innerHTML = 0;
+        } else {
+            let a = total;
+            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+        }
+    });
 
     //Для ввода только чисел без "e" и "+"
     function numbersWithoutPlusAndE(value) {
