@@ -207,7 +207,9 @@ window.addEventListener('DOMContentLoaded', () => {
         value.addEventListener('keypress', function() {
             let that = this;
                 setTimeout(function() {
-                    that.value = that.value.replace(/[^+/\d/]/g, ''); 
+                    that.value = that.value.replace(/[a-zA-z]|[а-яА-Я]/g, '');        
+                    that.value = that.value.replace(/[0-9][+]/g, that.value.substr(that.value.length), '');
+                    that.value = that.value.replace(/[+][+]/g, that.value.substr(that.value.length), '');
                 }, 0);   
         });
     }
