@@ -268,16 +268,15 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
     //Calc
-
     let persons = document.querySelectorAll('.counter-block-input')[0],
         restDays = document.querySelectorAll('.counter-block-input')[1],
         place = document.getElementById('select'),
         totalValue = document.getElementById('total'),
         personsSum = 0,
         daysSum = 0,
-        total = 0;
+        total = 0,
+        restPlace = place.options[place.selectedIndex].value;
 
     totalValue.innerHTML = 0;
     numbersWithoutPlusAndE(persons);
@@ -285,44 +284,45 @@ window.addEventListener('DOMContentLoaded', () => {
 
     persons.addEventListener('change', function() {
         personsSum = +this.value;
-        //Проверка, что число не удалено после рассчёта
-        if (persons.value == '') {
-            total = 0;
-        } else {
-            total = (daysSum + personsSum)*4000;
-        }
-
-        if (restDays.value == '') {
-            totalValue.innerHTML = 0;
-        } else {
-            totalValue.innerHTML = total;
-        }
+        calc(persons, restDays);
     });
 
     restDays.addEventListener('change', function() {
         daysSum = +this.value;
-        //Проверка, что число не удалено после рассчёта
-        if (restDays.value == '') {
-            total = 0;
-        } else {
-            total = (daysSum + personsSum)*4000;
-        }
-
-        if (persons.value == '') {
-            totalValue.innerHTML = 0;
-        }  else {
-            totalValue.innerHTML = total;
-        }
+        calc(restDays, persons);
     });
 
     place.addEventListener('change', function() {
-        if(restDays.value == '' || persons.value == '') {
+        restPlace = this.options[this.selectedIndex].value;
+
+    });
+
+    ///Подсчёт суммы
+    function calc(input1, input2) {
+        //Проверка, что число не удалено после рассчёта
+        if (input1.value == '' || input1.value == 0) {
+            total = 0;                   
+        } else {
+            total = (daysSum + personsSum)*4000;
+            finalCount(input1,input2, restPlace);
+        }
+
+        if (input2.value == '' || input2.value == 0) {
+            totalValue.innerHTML = 0;
+        } else {
+            totalValue.innerHTML = total;
+            finalCount(input1,input2, restPlace);
+        }
+    }
+
+    function finalCount(input1,input2, place) {
+        if(input1.value == '' || input2.value == '' || input1.value == 0 || input2.value == 0) {
             total.value.innerHTML = 0;
         } else {
             let a = total;
-            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+            totalValue.innerHTML = a * place;
         }
-    });
+    }
 
     //Для ввода только чисел без "e" и "+"
     function numbersWithoutPlusAndE(value) {
