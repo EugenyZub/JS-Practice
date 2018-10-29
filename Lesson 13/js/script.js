@@ -135,7 +135,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     let form = document.querySelector('.main-form'),                        //модальное окно
-        input = form.getElementsByTagName('input'),                         
+        inputModal = form.getElementsByTagName('input'),                         
         tel = document.getElementById('phone'),
 
         contactForm = document.querySelector('#form'),                      //большая форма внизу
@@ -148,75 +148,24 @@ window.addEventListener('DOMContentLoaded', () => {
     numbers(contactPhone);
     numbers(tel);
 
-    //отправка формы из модального окна
-    function sendForm(elem) {
-        elem.addEventListener('submit', function(e) {
-            e.preventDefault();
-                elem.appendChild(statusMessage);
-                let formData = new FormData(elem);
-                       
-                //Очищение инпута формы после ввода отправки данных
-                function clearInput() {
-                    for(let i = 0; i < input.length; i++) {
-                        input[i].value = '';
-                    }
-                }
-
-            postData(formData)
-                .then(()=> statusMessage.innerHTML = message.loading)
-                .then(()=> {
-                    thanksModal.style.diplay = 'block';
-                    statusMessage.innerHTML = '';
-                })
-                .catch(()=> statusMessage.innerHTML = message.failure)
-                .then(clearInput);               
-        });
-    }
-    sendForm(form);
-
-
     //Conact-Form
-    function sendContactForm(elem) {
+    function sendContactForm(elem, input) {
         elem.addEventListener('submit', function(e) {
             e.preventDefault();
                 elem.appendChild(statusMessage);
                 let contactFormData = new FormData(elem);
-        
-                function  postContactData(data) {
-                    return new Promise(function(resolve, reject) {
-                        let request = new XMLHttpRequest();
-                    
-                        request.open('POST', 'server.php');
-                        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-                        request.onreadystatechange = function() {
-                            if (request.readyState < 4) {
-                                resolve();
-                            } else if (request.readyState === 4) {
-                                if (request.status == 200) {
-                                    resolve();
-                                } else {
-                                    reject();
-                                }
-                            }
-                        };
-
-                        request.send(data);
-                    });
-                } //End Promise
 
                 //Очищение инпута формы после ввода отправки данных
                 function clearInputs() {
-                    for(let i = 0; i < contactInputs.length; i++) {
-                        contactInputs[i].value = '';
+                    for(let i = 0; i < input.length; i++) {
+                        input[i].value = '';
                     }
                 }
 
             postData(contactFormData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
-                    thanksModal.style.diplay = 'block';
-                    statusMessage.innerHTML = '';
+                    statusMessage.innerHTML = message.success;
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)
                 .then(clearInputs);
@@ -224,17 +173,22 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
   
-    sendContactForm(contactForm);
+    sendContactForm(contactForm, contactInputs);
+    sendContactForm(form, inputModal);
+
 
     //Только цифры и знак +
     function numbers(value) {
         value.addEventListener('keypress', function() {
             let that = this;
                 setTimeout(function() {
-                    that.value = that.value.replace(/[^+/\d/]/g, ''); 
+                    that.value = that.value.replace(/[a-zA-z]|[а-яА-Я]/g, '');        
+                    that.value = that.value.replace(/[0-9][+]/g, that.value.substr(that.value.length), '');
+                    that.value = that.value.replace(/[+][+]/g, that.value.substr(that.value.length), '');
                 }, 0);   
         });
     }
+
 
     //Промис
     function postData(data) {
