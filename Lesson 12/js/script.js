@@ -166,7 +166,7 @@ window.addEventListener('DOMContentLoaded', () => {
             postData(formData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
-                    statusMessage.innerHTML = '';
+                    statusMessage.innerHTML = message.success;
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)
                 .then(clearInput);               
@@ -192,7 +192,7 @@ window.addEventListener('DOMContentLoaded', () => {
             postData(contactFormData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
-                    statusMessage.innerHTML = '';
+                    statusMessage.innerHTML = message.success;
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)
                 .then(clearInputs);
