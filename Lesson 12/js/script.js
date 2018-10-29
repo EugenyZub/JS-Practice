@@ -136,7 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     let form = document.querySelector('.main-form'),                        //модальное окно
-        input = form.getElementsByTagName('input'),                         
+        inputModal = form.getElementsByTagName('input'),                         
         tel = document.getElementById('phone'),
 
         contactForm = document.querySelector('#form'),                      //большая форма внизу
@@ -149,34 +149,8 @@ window.addEventListener('DOMContentLoaded', () => {
     numbers(contactPhone);
     numbers(tel);
 
-    //отправка формы из модального окна
-    function sendForm(elem) {
-        elem.addEventListener('submit', function(e) {
-            e.preventDefault();
-                elem.appendChild(statusMessage);
-                let formData = new FormData(elem);
-                       
-                //Очищение инпута формы после ввода отправки данных
-                function clearInput() {
-                    for(let i = 0; i < input.length; i++) {
-                        input[i].value = '';
-                    }
-                }
-
-            postData(formData)
-                .then(()=> statusMessage.innerHTML = message.loading)
-                .then(()=> {
-                    statusMessage.innerHTML = message.success;
-                })
-                .catch(()=> statusMessage.innerHTML = message.failure)
-                .then(clearInput);               
-        });
-    }
-    sendForm(form);
-
-
     //Conact-Form
-    function sendContactForm(elem) {
+    function sendContactForm(elem, input) {
         elem.addEventListener('submit', function(e) {
             e.preventDefault();
                 elem.appendChild(statusMessage);
@@ -184,8 +158,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 //Очищение инпута формы после ввода отправки данных
                 function clearInputs() {
-                    for(let i = 0; i < contactInputs.length; i++) {
-                        contactInputs[i].value = '';
+                    for(let i = 0; i < input.length; i++) {
+                        input[i].value = '';
                     }
                 }
 
@@ -200,7 +174,9 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
   
-    sendContactForm(contactForm);
+    sendContactForm(contactForm, contactInputs);
+    sendContactForm(form, inputModal);
+
 
     //Только цифры и знак +
     function numbers(value) {

@@ -6,7 +6,7 @@ function curentCourse(elem) {
     elem.addEventListener('input', (e)=> {
        // e.preventDefault();
         let formData = new FormData(elem);
-        //let data;
+        let data;
         let request;
         function  postCourse(data) {
             return new Promise(function(resolve, reject) {
@@ -19,8 +19,6 @@ function curentCourse(elem) {
 
                 request.onreadystatechange = function() {
                     if (request.readyState === 4 && request.status == 200) {
-                        data = JSON.parse(request.response);
-                        inputUsd.value = inputRub.value / data.usd;
                         resolve();
                     } else {
                         reject();                       
@@ -31,7 +29,10 @@ function curentCourse(elem) {
         }
 
         postCourse(formData)          
-                
+            .then(()=> {
+                data = JSON.parse(request.response);
+                inputUsd.value = inputRub.value / data.usd;
+            })
             .catch(()=> inputUsd.value = "Что-то пошло не так!");       
     });
 }
