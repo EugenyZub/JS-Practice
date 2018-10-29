@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function getTimeRemaining(endtime) {
         let x = new Date();
         let y = x.getTimezoneOffset() * 60 * 1000;
-        //console.log(y);
+        console.log(y);
         let t = Date.parse(endtime) - Date.parse(new Date()) + y,
             seconds = addZero(Math.floor((t/1000) % 60)),
             minutes = addZero(Math.floor((t/1000/ 60) % 60)),
@@ -129,9 +129,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     //Form
+    let img = document.createElement('img');
+
    let message = {
-        loading: 'Загрузка...',
-        success: 'Спасибо! Скоро мы с вами свяжемся!',
+        //loading: 'Загрузка...',
+        loading: img.src = '../img/ajax-loader.gif',
+        //success: 'Спасибо! Скоро мы с вами свяжемся!',
+        success: img.src = '../img/achievement.png',
         failure: 'Что-то пошло не так'
     };
 
@@ -176,7 +180,6 @@ window.addEventListener('DOMContentLoaded', () => {
   
     sendContactForm(contactForm, contactInputs);
     sendContactForm(form, inputModal);
-
 
     //Только цифры и знак +
     function numbers(value) {

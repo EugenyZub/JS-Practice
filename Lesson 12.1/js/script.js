@@ -2,38 +2,36 @@
 let inputRub = document.getElementById('rub'),
     inputUsd = document.getElementById('usd');
 
-function curentCourse(elem) {
-    elem.addEventListener('input', (e)=> {
-       // e.preventDefault();
-        let formData = new FormData(elem);
-        //let data;
-        let request;
-        function  postCourse(data) {
-            return new Promise(function(resolve, reject) {
-                request = new XMLHttpRequest();
-
-                request.open('GET', 'js/current.json');
-                request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-                //request.send();
-                
-
-                request.onreadystatechange = function() {
-                    if (request.readyState === 4 && request.status == 200) {
-                        data = JSON.parse(request.response);
-                        inputUsd.value = inputRub.value / data.usd;
-                        resolve();
-                    } else {
-                        reject();                       
-                    }
-                };
-                request.send(data);
+    function postCourse() {
+        let promise = new Promise(function (resolve, reject) {
+    
+            let request = new XMLHttpRequest();
+    
+            request.open('GET', 'js/current.json');
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            request.send();
+    
+    
+            request.addEventListener('readystatechange', function() {
+                if (request.readyState < 4) {
+                } else if (request.readyState === 4 && request.status == 200) {
+                    let data = JSON.parse(request.response);
+                    resolve(inputRub.value / data.usd);
+                } else {
+                    reject("Что-то пошло не так!");
+                }
             });
-        }
-
-        postCourse(formData)          
-                
-            .catch(()=> inputUsd.value = "Что-то пошло не так!");       
+        });
+        return promise;
+    }
+    inputRub.addEventListener('input', () => {
+    
+        postCourse()
+            .then((value) => {
+                inputUsd.value = value;
+            })
+            .catch((value) => {
+                inputUsd.value = value;
+            });
+    
     });
-}
-
-curentCourse(inputRub);
