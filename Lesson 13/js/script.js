@@ -324,7 +324,8 @@ window.addEventListener('DOMContentLoaded', () => {
         personsSum = 0,
         daysSum = 0,
         total = 0,
-        restPlace = place.options[place.selectedIndex].value;;
+        restPlace = place.options[place.selectedIndex].value;
+        
     totalValue.innerHTML = 0;
     numbersWithoutPlusAndE(persons);
     numbersWithoutPlusAndE(restDays);
