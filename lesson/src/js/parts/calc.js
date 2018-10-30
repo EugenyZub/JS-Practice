@@ -45,7 +45,7 @@ function calc() {
             total = (daysSum + personsSum)*4000 * restPlace;
         }
 
-        if (input2.value == '') {
+        if (input2.value == '' || input2.value == 0) {
             totalValue.innerHTML = 0;
         } else {
             totalValue.innerHTML = total;

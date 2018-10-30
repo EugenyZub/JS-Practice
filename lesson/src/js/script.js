@@ -9,11 +9,12 @@ window.addEventListener('DOMContentLoaded', () => {
         tabs = require('./parts/tabs.js'),
         timer = require('./parts/timer.js');
 
-    tabs();
-    timer();
-    modal();
+    calc();
     form();
+    modal();
     scroll();
     slider();
-    calc();   
+    tabs();
+    timer();   
+       
 });
