@@ -135,7 +135,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     let form = document.querySelector('.main-form'),                        //модальное окно
-        inputModal = form.getElementsByTagName('input'),                         
+        input = form.getElementsByTagName('input'),                         
         tel = document.getElementById('phone'),
 
         contactForm = document.querySelector('#form'),                      //большая форма внизу
@@ -148,24 +148,75 @@ window.addEventListener('DOMContentLoaded', () => {
     numbers(contactPhone);
     numbers(tel);
 
+    //отправка формы из модального окна
+    function sendForm(elem) {
+        elem.addEventListener('submit', function(e) {
+            e.preventDefault();
+                elem.appendChild(statusMessage);
+                let formData = new FormData(elem);
+                       
+                //Очищение инпута формы после ввода отправки данных
+                function clearInput() {
+                    for(let i = 0; i < input.length; i++) {
+                        input[i].value = '';
+                    }
+                }
+
+            postData(formData)
+                .then(()=> statusMessage.innerHTML = message.loading)
+                .then(()=> {
+                    thanksModal.style.diplay = 'block';
+                    statusMessage.innerHTML = '';
+                })
+                .catch(()=> statusMessage.innerHTML = message.failure)
+                .then(clearInput);               
+        });
+    }
+    sendForm(form);
+
+
     //Conact-Form
-    function sendContactForm(elem, input) {
+    function sendContactForm(elem) {
         elem.addEventListener('submit', function(e) {
             e.preventDefault();
                 elem.appendChild(statusMessage);
                 let contactFormData = new FormData(elem);
+        
+                function  postContactData(data) {
+                    return new Promise(function(resolve, reject) {
+                        let request = new XMLHttpRequest();
+                    
+                        request.open('POST', 'server.php');
+                        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+                        request.onreadystatechange = function() {
+                            if (request.readyState < 4) {
+                                resolve();
+                            } else if (request.readyState === 4) {
+                                if (request.status == 200) {
+                                    resolve();
+                                } else {
+                                    reject();
+                                }
+                            }
+                        };
+
+                        request.send(data);
+                    });
+                } //End Promise
 
                 //Очищение инпута формы после ввода отправки данных
                 function clearInputs() {
-                    for(let i = 0; i < input.length; i++) {
-                        input[i].value = '';
+                    for(let i = 0; i < contactInputs.length; i++) {
+                        contactInputs[i].value = '';
                     }
                 }
 
             postData(contactFormData)
                 .then(()=> statusMessage.innerHTML = message.loading)
                 .then(()=> {
-                    statusMessage.innerHTML = message.success;
+                    thanksModal.style.diplay = 'block';
+                    statusMessage.innerHTML = '';
                 })
                 .catch(()=> statusMessage.innerHTML = message.failure)
                 .then(clearInputs);
@@ -173,22 +224,17 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
   
-    sendContactForm(contactForm, contactInputs);
-    sendContactForm(form, inputModal);
-
+    sendContactForm(contactForm);
 
     //Только цифры и знак +
     function numbers(value) {
         value.addEventListener('keypress', function() {
             let that = this;
                 setTimeout(function() {
-                    that.value = that.value.replace(/[a-zA-z]|[а-яА-Я]/g, '');        
-                    that.value = that.value.replace(/[0-9][+]/g, that.value.substr(that.value.length), '');
-                    that.value = that.value.replace(/[+][+]/g, that.value.substr(that.value.length), '');
+                    that.value = that.value.replace(/[^+/\d/]/g, ''); 
                 }, 0);   
         });
     }
-
 
     //Промис
     function postData(data) {
@@ -268,7 +314,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
     //Calc
+
     let persons = document.querySelectorAll('.counter-block-input')[0],
         restDays = document.querySelectorAll('.counter-block-input')[1],
         place = document.getElementById('select'),
@@ -276,53 +324,57 @@ window.addEventListener('DOMContentLoaded', () => {
         personsSum = 0,
         daysSum = 0,
         total = 0,
-        restPlace = place.options[place.selectedIndex].value;
-
+        restPlace = place.options[place.selectedIndex].value;;
     totalValue.innerHTML = 0;
     numbersWithoutPlusAndE(persons);
     numbersWithoutPlusAndE(restDays);
 
     persons.addEventListener('change', function() {
         personsSum = +this.value;
-        calc(persons, restDays);
+        //Проверка, что число не удалено после рассчёта
+        if (persons.value == '' || persons.value == 0) {
+            total = 0;
+        } else {
+            total = (daysSum + personsSum)*4000 * restPlace;
+        }
+
+        if (restDays.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            totalValue.innerHTML = total;
+        }
     });
 
     restDays.addEventListener('change', function() {
         daysSum = +this.value;
-        calc(restDays, persons);
+        //Проверка, что число не удалено после рассчёта
+        if (restDays.value == '' || restDays.value == 0) {
+            total = 0;    
+        } else {
+            total = (daysSum + personsSum)*4000 * restPlace;
+        }
+
+        if (persons.value == '') {
+            totalValue.innerHTML = 0;
+        }  else {
+            totalValue.innerHTML = total;
+
+        }
     });
 
     place.addEventListener('change', function() {
         restPlace = this.options[this.selectedIndex].value;
-
-    });
-
-    ///Подсчёт суммы
-    function calc(input1, input2) {
-        //Проверка, что число не удалено после рассчёта
-        if (input1.value == '' || input1.value == 0) {
-            total = 0;                   
-        } else {
-            total = (daysSum + personsSum)*4000;
-            finalCount(input1,input2, restPlace);
-        }
-
-        if (input2.value == '' || input2.value == 0) {
+        if(restDays.value == '' || persons.value == '' || restDays.value == 0 || persons.value == 0) {
             totalValue.innerHTML = 0;
         } else {
-            totalValue.innerHTML = total;
-            finalCount(input1,input2, restPlace);
-        }
-    }
+            let a;
+            if (persons.value != '' || personsSum.value != 0 || restDays.value != '' || restDays.value != 0) {
+                a = (daysSum + personsSum)*4000;
+            }
 
-    function finalCount(input1,input2, place) {
-        if(input1.value == '' || input2.value == '' || input1.value == 0 || input2.value == 0) {
-            total.value.innerHTML = 0;
-        } else {
-            let a = total;
-            totalValue.innerHTML = a * place;
+            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
         }
-    }
+    });
 
     //Для ввода только чисел без "e" и "+"
     function numbersWithoutPlusAndE(value) {
