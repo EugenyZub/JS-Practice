@@ -331,49 +331,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
     persons.addEventListener('change', function() {
         personsSum = +this.value;
-        //Проверка, что число не удалено после рассчёта
-        if (persons.value == '' || persons.value == 0) {
-            total = 0;
-        } else {
-            total = (daysSum + personsSum)*4000 * restPlace;
-        }
-
-        if (restDays.value == '') {
-            totalValue.innerHTML = 0;
-        } else {
-            totalValue.innerHTML = total;
-        }
+        calc(persons, restDays);
     });
 
     restDays.addEventListener('change', function() {
         daysSum = +this.value;
-        //Проверка, что число не удалено после рассчёта
-        if (restDays.value == '' || restDays.value == 0) {
-            total = 0;    
-        } else {
-            total = (daysSum + personsSum)*4000 * restPlace;
-        }
-
-        if (persons.value == '') {
-            totalValue.innerHTML = 0;
-        }  else {
-            totalValue.innerHTML = total;
-
-        }
+        calc(restDays, persons);
     });
 
     place.addEventListener('change', function() {
         restPlace = this.options[this.selectedIndex].value;
-        if(restDays.value == '' || persons.value == '' || restDays.value == 0 || persons.value == 0) {
-            totalValue.innerHTML = 0;
-        } else {
-            let a;
-            if (persons.value != '' || personsSum.value != 0 || restDays.value != '' || restDays.value != 0) {
-                a = (daysSum + personsSum)*4000;
-            }
-
-            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
-        }
+        calcWithPlace(persons, restDays);
     });
 
     //Для ввода только чисел без "e" и "+"
@@ -384,5 +352,34 @@ window.addEventListener('DOMContentLoaded', () => {
                     that.value = that.value.replace(/\D/g, ''); 
                 }, 0);   
         });
+    }
+
+    //Проверка инпутов в калькуляторе и рассчёт стоимости( без учёта места отдыха)
+    function calc(input1, input2) {
+        if (input1.value == '' || input1.value == 0) {
+            total = 0;
+        } else {
+            total = (daysSum + personsSum)*4000 * restPlace;
+        }
+
+        if (input2.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            totalValue.innerHTML = total;
+        }
+    }
+
+    //Проверка инпутов в калькуляторе и рассчёт стоимости( с учётом места отдыха)
+    function calcWithPlace(personsInput, restInput) {
+        if(restInput.value == '' || personsInput.value == '' || restInput.value == 0 || personsInput.value == 0) {
+            totalValue.innerHTML = 0;
+        } else {
+            let a;
+            if (personsInput.value != '' || personsInput.value != 0 || restInput.value != '' || restInput.value != 0) {
+                a = (daysSum + personsSum)*4000;
+            }
+
+            totalValue.innerHTML = a * place.options[place.selectedIndex].value;
+        }
     }
 });
