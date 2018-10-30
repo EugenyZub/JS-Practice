@@ -275,14 +275,14 @@ window.addEventListener('DOMContentLoaded', () => {
         totalValue = document.getElementById('total'),
         personsSum = 0,
         daysSum = 0,
-        total = 0,
-        restPlace = place.options[place.selectedIndex].value;
-
+        total = 0;
+        //restPlace = place.options[place.selectedIndex].value;
+    //let restPlace;
     totalValue.innerHTML = 0;
     numbersWithoutPlusAndE(persons);
     numbersWithoutPlusAndE(restDays);
-
-    persons.addEventListener('change', function() {
+    placeCalc();
+    persons.addEventListener('change', function() {       
         personsSum = +this.value;
         calc(persons, restDays);
     });
@@ -291,38 +291,44 @@ window.addEventListener('DOMContentLoaded', () => {
         daysSum = +this.value;
         calc(restDays, persons);
     });
-
-    place.addEventListener('change', function() {
-        restPlace = this.options[this.selectedIndex].value;
-
-    });
-
+   
+    function placeCalc() {   
+        place.addEventListener('change', function() {
+            //console.log(restPlace);
+            let restPlace;
+            // function finalCount(input1,input2) {
+                if(restDays.value == '' || persons.value == '' || restDays.value == 0 || persons.value == 0) {
+                    restPlace = this.options[this.selectedIndex].value;
+                    totalValue.innerHTML = 0;
+                } else {
+                    restPlace = this.options[this.selectedIndex].value;
+                    console.log(restPlace);
+                    let a = (+restDays.value + +persons.value) * 4000 * restPlace;
+                    totalValue.innerHTML = a;
+                }
+            // }
+        });
+    }
+    
     ///Подсчёт суммы
     function calc(input1, input2) {
         //Проверка, что число не удалено после рассчёта
         if (input1.value == '' || input1.value == 0) {
-            total = 0;                   
+            total = 0;                  
         } else {
             total = (daysSum + personsSum)*4000;
-            finalCount(input1,input2, restPlace);
+            //finalCount(input1,input2);
         }
 
         if (input2.value == '' || input2.value == 0) {
             totalValue.innerHTML = 0;
         } else {
             totalValue.innerHTML = total;
-            finalCount(input1,input2, restPlace);
+            //finalCount(input1,input2);
         }
     }
 
-    function finalCount(input1,input2, place) {
-        if(input1.value == '' || input2.value == '' || input1.value == 0 || input2.value == 0) {
-            total.value.innerHTML = 0;
-        } else {
-            let a = total;
-            totalValue.innerHTML = a * place;
-        }
-    }
+    
 
     //Для ввода только чисел без "e" и "+"
     function numbersWithoutPlusAndE(value) {
